@@ -6,8 +6,8 @@ const User = mongoose.model('User');
 /* GET users listing. */
 router.get('/', function(req, res) {
   const users = User.find({}, function(err, result){
-    if (err) return res.send(err);
-    if (result.length <= 0) return res.send('no users');
+    if (err) return res.json(err);
+    if (result.length <= 0) return res.json('no users');
     res.json(result);
   });
 });
@@ -15,7 +15,7 @@ router.get('/', function(req, res) {
 router.post('/add', function(req, res){
   const user = new User(req.body);
   user.save(function(err, u){
-    if (err) return res.send(err);
+    if (err) return res.json(err);
     res.json(u);
   });
 });
@@ -27,7 +27,7 @@ router.post('/update/:id', function(req, res){
     {$set: req.body},
     {new: true, context: 'query'},
     function(err, u){
-      if (err) return res.send(err);
+      if (err) return res.json(err);
       res.json(u);
     }
   );
@@ -35,8 +35,8 @@ router.post('/update/:id', function(req, res){
 
 router.post('/delete/:id', function(req, res){
   User.findOneAndRemove({_id: req.params.id}, function(err){
-    if (err) return res.send(err);
-    res.send('user deleted');
+    if (err) return res.json(err);
+    res.json({'response':'user deleted'});
   });
 });
 

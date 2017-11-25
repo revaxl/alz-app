@@ -8,7 +8,10 @@ const userSchema = new Schema({
     phone: String,
     address: String,
     longitude: Number,
-    latitude: Number
+    latitude: Number,
+    contacts: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'Contact'}]
 });
 
 module.exports = mongoose.model('User', userSchema);
