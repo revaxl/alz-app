@@ -10,7 +10,7 @@ const Activity = mongoose.model('Activity');
 router.get('/', function(req, res) {
   User.find({}, function(err, result){
     if (err) return res.json(err);
-    res.json(result);
+    res.send(result);
   });
 });
 
