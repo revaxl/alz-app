@@ -7,6 +7,10 @@ const medicationSchema = new Schema({
         type: String,
         required: true },
     dose: Number,
+    time: {
+        type: Date,
+        required: true
+    },
     taken: {
         type: Boolean,
         default: false },

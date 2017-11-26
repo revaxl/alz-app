@@ -38,7 +38,9 @@ const userSchema = new Schema({
 });
 
 function autoPopulate(next){
-	this.populate('contacts');
+    this.populate('contacts');
+    this.populate('medications', '-user');
+    this.populate('activities')
 	next();
 };
 

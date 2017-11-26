@@ -2,7 +2,12 @@ extends layout
 
 block content
   a(href='/users') users
+  p /users => list users
+  p /users/(id) => user by id
+  p /users/(login)/(pass) => user by login + password
   hr
   a(href='/activities') activities
+  p /activities => list activities
   hr
   a(href='/medications') medications
+  p /medications => list medications

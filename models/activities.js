@@ -6,9 +6,16 @@ const activitySchema = new Schema({
     name: {
         type: String,
         required: true },
-    when: {
+    date: {
         type: Date,
         required: true },
+    place: {
+            type: String,
+            required: true },
+    time: {
+        type: Date,
+        required: true
+    },
     completed: {
         type: Boolean,
         default: false }
