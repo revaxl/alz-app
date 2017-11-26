@@ -18,14 +18,14 @@ router.get('/', function(req, res) {
 router.get('/:id', function(req, res){
   User.findOne({_id: req.params.id}, function(err, u){
     if (err) return res.json(err);
-    res.json(u);
+    res.send(u);
   });
 });
 
 router.get('/:login/:pass', function(req, res){
   User.findOne({$and: [{login: req.params.login, }, {password: req.params.pass}]}, function(err, user){
     if (err) return res.json(err);
-    res.json(user);
+    res.send(user);
   });
 });
 
