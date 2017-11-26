@@ -23,7 +23,7 @@ router.get('/:id', function(req, res){
 });
 
 router.get('/:login/:pass', function(req, res){
-  User.find({$and: [{login: req.params.login, }, {password: req.params.pass}]}, function(err, user){
+  User.findOne({$and: [{login: req.params.login, }, {password: req.params.pass}]}, function(err, user){
     if (err) return res.json(err);
     res.json(user);
   });
