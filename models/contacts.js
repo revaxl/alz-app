@@ -3,12 +3,24 @@ const Schema = mongoose.Schema;
 mongoose.Promise = global.Promise;
 
 const contactSchema = ({
-    fname: String,
-    lname: String,
-    phone: String,
-    adress: String,
+    fname: {
+        type: String,
+        required: true },
+    lname: {
+        type: String,
+        required: true },
+    phone: {
+        type: String,
+        required: true },
+    address: {
+        type: String,
+        required: true },
     longitude: Number,
-    latitude: Number
+    latitude: Number,
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true }
 });
 
 module.exports = mongoose.model('Contact', contactSchema);

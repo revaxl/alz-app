@@ -3,11 +3,16 @@ mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
 
 const medicationSchema = new Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true },
     dose: Number,
     taken: {
         type: Boolean,
-        default: false }
+        default: false },
+    user: [{
+        type: mongoose.Schema.ObjectId,
+        ref: 'User'}]
 });
 
 module.exports = mongoose.model('Medication', medicationSchema);

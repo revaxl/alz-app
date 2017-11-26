@@ -10,14 +10,6 @@ router.get('/', function(req, res){
     });
 });
 
-router.post('/add', function(req, res){
-    const contact = new Contact(req.body);
-    contact.save(function(err, con){
-        if (err) return res.json(err);
-        res.json(con);
-    });
-});
-
 router.post('update/:id', function(req, res){
     Contact.findOneAndUpdate(
         {_id: req.params.id},
@@ -36,3 +28,5 @@ router.post('delete/:id', function(req, res){
         res.json({'response': 'delete success'});
     });
 });
+
+module.exports = router;

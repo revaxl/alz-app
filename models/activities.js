@@ -3,8 +3,12 @@ mongoose.Promise = global.Promise;
 const Schema = mongoose.Schema;
 
 const activitySchema = new Schema({
-    name: String,
-    when: Date,
+    name: {
+        type: String,
+        required: true },
+    when: {
+        type: Date,
+        required: true },
     completed: {
         type: Boolean,
         default: false }

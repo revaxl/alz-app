@@ -3,7 +3,6 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const Activity = mongoose.model('Activity');
 
-/* GET acts listing. */
 router.get('/', function(req, res) {
   const act = Activity.find({}, function(err, result){
     if (err) return res.json(err);
