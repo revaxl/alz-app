@@ -8,7 +8,7 @@ const Activity = mongoose.model('Activity');
 
 // get all users
 router.get('/', function(req, res) {
-  const users = User.find({}, function(err, result){
+  User.find({}, function(err, result){
     if (err) return res.json(err);
     res.json(result);
   });
@@ -16,21 +16,18 @@ router.get('/', function(req, res) {
 
 // find user by ID
 router.get('/:id', function(req, res){
-  const user = User.findOne({_id: req.params.id}, function(err, u){
+  User.findOne({_id: req.params.id}, function(err, u){
     if (err) return res.json(err);
     res.json(u);
   });
 });
 
 router.get('/:login/:pass', function(req, res){
-  const user = User.find({$and: [{login: req.params.login, }, {password: req.params.pass}]}, function(err, user){
+  User.find({$and: [{login: req.params.login, }, {password: req.params.pass}]}, function(err, user){
     if (err) return res.json(err);
     res.json(user);
   });
 });
-// router.get('/:id/contact', function(req, res){
-//   res.render('contact');
-// });
 
 // create new user
 router.post('/add', function(req, res){
@@ -66,8 +63,13 @@ router.post('/delete/:id', function(req, res){
 /**
  * Contacts
  */
+router.get('/:id/contacts', function(req, res){
+  Contact.find({}, function(err, cons){
+    if (err) return res.json(err);
+    res.json(cons);
+  });
+});
 
-// create new contact for a user
 router.post('/:id/add/contact', function(req, res){
   req.body.user = req.params.id;
   const contact = new Contact(req.body);
@@ -80,9 +82,35 @@ router.post('/:id/add/contact', function(req, res){
   });
 });
 
+router.post('/:user_id/update/contact/:id', function(req, res){
+  Contact.findOneAndUpdate(
+      {_id: req.params.id},
+      {$set: req.body},
+      {new: true, context: 'query'},
+      function(err, con){
+          if (err) return res.json(err)
+          res.json(con);
+      }
+  );
+});
+
+router.post('/:user_id/delete/contact/:id', function(req, res){
+  Contact.findOneAndRemove({_id: req.params.id}, function(err, con){
+      if (err) return res.json(err);
+      User.findOneAndUpdate({_id: req.params.id}, {$pull: {contacts: con._id}});
+      res.json({'response': 'delete success'});
+  });
+});
+
 /**
  * Medications
  */
+router.get('/:id/medications', function(req, res){
+  User.findOne({_id: req.params.id}, function(err, u){
+    if (err) return res.json(err);
+    res.json(u);
+  });
+});
 
 router.post('/:id/add/medication', function(req, res){
   req.body.user = req.params.id;
@@ -96,6 +124,27 @@ router.post('/:id/add/medication', function(req, res){
   });
 });
 
+router.post('/:user_id/update/medication/:id', function(req, res){
+  
+  const med = Medication.findOneAndUpdate(
+    {_id: req.params.id},
+    {$set: req.body},
+    {new: true, context: 'query'},
+    function(err, u){
+      if (err) return res.json(err);
+      res.json(u);
+    }
+  );
+});
+
+router.post('/:user_id/delete/medication/:id', function(req, res){
+  Medication.findOneAndRemove({_id: req.params.id}, function(err, med){
+    if (err) return res.json(err);
+    User.findOneAndUpdate({_id: req.params.id}, {$pull: {medication: med._id}});
+    res.json({'response':'medication deleted'});
+  });
+});
+
 /**
  * Activity
  */
@@ -104,10 +153,32 @@ router.post('/:id/add/activity', function(req, res){
   const activity = new Activity(req.body);
   activity.save(function(err, act){
     if (err) return res.json(err);
-    User.findOneAndUpdate({_id: req.params.id}, {$push: {medications: act._id}}, function(err){
-      if (err) return res.send(err);
+    User.findOneAndUpdate({_id: req.params.id}, {$push: {activities: act._id}}, function(err){
+      if (err) return res.json(err);
     });
     res.json(act);
   });
 });
+
+router.post('/:user_id/update/activity/:id', function(req, res){
+  
+  const act = Activity.findOneAndUpdate(
+    {_id: req.params.id},
+    {$set: req.body},
+    {new: true, context: 'query'},
+    function(err, u){
+      if (err) return res.json(err);
+      res.json(u);
+    }
+  );
+});
+
+router.post('/:user_id/delete/activity/:id', function(req, res){
+  Activity.findOneAndRemove({_id: req.params.id}, function(err, act){
+    if (err) return res.json(err);
+    User.findOneAndUpdate({_id: req.params.id}, {$pull: {activities: act._id}});
+    res.json({'response':'activity deleted'});
+  });
+});
+
 module.exports = router;

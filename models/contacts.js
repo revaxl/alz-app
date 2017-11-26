@@ -17,6 +17,10 @@ const contactSchema = ({
         required: true },
     longitude: Number,
     latitude: Number,
+    type: {
+        type: String,
+        required: true
+    },
     user: {
         type: mongoose.Schema.ObjectId,
         ref: 'User',

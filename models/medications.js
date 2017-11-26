@@ -12,7 +12,7 @@ const medicationSchema = new Schema({
         required: true
     },
     taken: {
-        type: Boolean,
+        type: String,
         default: false },
     user: [{
         type: mongoose.Schema.ObjectId,

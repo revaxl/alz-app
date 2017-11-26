@@ -13,11 +13,11 @@ const activitySchema = new Schema({
             type: String,
             required: true },
     time: {
-        type: Date,
+        type: String,
         required: true
     },
     completed: {
-        type: Boolean,
+        type: String,
         default: false }
 
 });

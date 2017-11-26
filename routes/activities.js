@@ -11,32 +11,4 @@ router.get('/', function(req, res) {
   });
 });
 
-router.post('/add', function(req, res){
-  const act = new Activity(req.body);
-  act.save(function(err, u){
-    if (err) return res.json(err);
-    res.json(u);
-  });
-});
-
-router.post('/update/:id', function(req, res){
-  
-  const act = Activity.findOneAndUpdate(
-    {_id: req.params.id},
-    {$set: req.body},
-    {new: true, context: 'query'},
-    function(err, u){
-      if (err) return res.json(err);
-      res.json(u);
-    }
-  );
-});
-
-router.post('/delete/:id', function(req, res){
-  Activity.findOneAndRemove({_id: req.params.id}, function(err){
-    if (err) return res.json(err);
-    res.json({'response':'activity deleted'});
-  });
-});
-
 module.exports = router;

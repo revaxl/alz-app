@@ -4,10 +4,30 @@ block content
   a(href='/users') users
   p /users => list users
   p /users/(id) => user by id
+  p /users/update/(id) => update user info by id
+  p /users/delete/(id) => delete user by id
   p /users/(login)/(pass) => user by login + password
+  h3 user contact
+  p /users/(user-id)/add/contact => create new contact
+  p /users/(user-id)/update/contact/(id) => update contact by user id and contact id
+  p /users/(user-id)/delete/contact/(id) => delete contact by user id and contact id
+  h3 user medications
+  p /users/(user-id)/add/medication => create new medication
+  p /users/(user-id)/update/medication/(id) => update medication by user id and medication id
+  p /users/(user-id)/delete/medication/(id) => delete medication by user id and medication id
+  h3 user activities
+  p /users/(user-id)/add/activity => create new activity
+  p /users/(user-id)/update/activity/(id) => update activity by user id and activity id
+  p /users/(user-id)/delete/activity/(id) => delete activity by user id and activity id
   hr
   a(href='/activities') activities
   p /activities => list activities
+  p /activities/(id) => activity by id
+  p /activities/update/(id) => update activity by id
+  p /activities/delete/(id) => delete activity by id
   hr
   a(href='/medications') medications
   p /medications => list medications
+  p /medications/(id) => medication by id
+  p /medications/update/(id) => update medication by id
+  p /medications/delete/(id) => delete medication by id
